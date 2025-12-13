@@ -40,3 +40,13 @@
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/wall.png
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/floor.png
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/box_on_goal.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level3.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level4.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level10.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level5.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level6.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level7.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level8.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level9.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/torch_on_a.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/sign_exit.png

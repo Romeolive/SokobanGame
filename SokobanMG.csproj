@@ -64,5 +64,13 @@
     <Content Include="Content\Textures\floor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="Content\Textures\torch_on_a.png" />
+    <Content Include="Content\Textures\torch_on_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\sign_exit.png" />
+    <Content Include="Content\Textures\sign_exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

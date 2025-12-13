@@ -38,6 +38,20 @@ namespace SokobanMG.Core
                 }
             }
         }
+        
+        public bool IsCompleted()
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (map[y, x] is Box)
+                        return false;
+                }
+            }
+            return true;
+        }
+
 
         public void Update(KeyboardState current, KeyboardState previous)
         {
