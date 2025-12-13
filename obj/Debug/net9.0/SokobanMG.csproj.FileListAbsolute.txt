@@ -32,3 +32,11 @@
 /Users/romanlivshits/RiderProjects/SokobanMG/obj/Debug/net9.0/SokobanMG.genruntimeconfig.cache
 /Users/romanlivshits/RiderProjects/SokobanMG/obj/Debug/net9.0/ref/SokobanMG.dll
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level1.json
+/Users/romanlivshits/RiderProjects/SokobanMG/obj/Debug/net9.0/SokobanMG.sourcelink.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level2.json
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/box.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/player.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/goal.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/wall.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/floor.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/box_on_goal.png
