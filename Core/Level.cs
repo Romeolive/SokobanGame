@@ -12,7 +12,7 @@ namespace SokobanMG.Core
         private int height;
         private Entity[,] map;
         private Point player;
-        
+
         public int Width => width;
         public int Height => height;
 
@@ -41,7 +41,7 @@ namespace SokobanMG.Core
                 }
             }
         }
-        
+
         public bool IsCompleted()
         {
             for (int y = 0; y < height; y++)
@@ -54,7 +54,6 @@ namespace SokobanMG.Core
             }
             return true;
         }
-
 
         public void Update(KeyboardState current, KeyboardState previous)
         {
@@ -90,11 +89,7 @@ namespace SokobanMG.Core
                 var next = map[by, bx];
                 if (!next.IsWalkable) return;
 
-                if (next is Goal)
-                    map[by, bx] = new BoxOnGoal();
-                else
-                    map[by, bx] = new Box();
-
+                map[by, bx] = next is Goal ? new BoxOnGoal() : new Box();
                 map[ny, nx] = target is BoxOnGoal ? new Goal() : new Floor();
             }
 
@@ -104,31 +99,50 @@ namespace SokobanMG.Core
         private bool Inside(int x, int y)
             => x >= 0 && x < width && y >= 0 && y < height;
 
-        public void Draw(SpriteBatch sb, int cellSize, Dictionary<string, Texture2D> textures)
+        public void Draw(
+            SpriteBatch sb,
+            int cellSize,
+            Dictionary<string, Texture2D> textures,
+            int offsetX,
+            int offsetY
+        )
         {
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Entity e = map[y, x];
-                    Texture2D tex = e switch
+                    Texture2D tex = map[y, x] switch
                     {
                         Wall => textures["wall"],
                         Box => textures["box"],
                         BoxOnGoal => textures["box"],
                         Goal => textures["goal"],
-                        Floor => textures["floor"],
                         _ => textures["floor"]
                     };
 
-                    sb.Draw(tex, new Rectangle(x * cellSize, y * cellSize, cellSize, cellSize), Color.White);
+                    sb.Draw(
+                        tex,
+                        new Rectangle(
+                            offsetX + x * cellSize,
+                            offsetY + y * cellSize,
+                            cellSize,
+                            cellSize
+                        ),
+                        Color.White
+                    );
                 }
             }
 
-            sb.Draw(textures["player"], new Rectangle(player.X * cellSize, player.Y * cellSize, cellSize, cellSize), Color.White);
+            sb.Draw(
+                textures["player"],
+                new Rectangle(
+                    offsetX + player.X * cellSize,
+                    offsetY + player.Y * cellSize,
+                    cellSize,
+                    cellSize
+                ),
+                Color.White
+            );
         }
     }
 }
-
-
-

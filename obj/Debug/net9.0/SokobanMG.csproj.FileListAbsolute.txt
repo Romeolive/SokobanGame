@@ -50,3 +50,14 @@
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Maps/level9.json
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/torch_on_a.png
 /Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/sign_exit.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_0.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_1.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_2.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_3.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_4.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_5.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_6.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_7.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_8.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/hud_character_9.png
+/Users/romanlivshits/RiderProjects/SokobanMG/bin/Debug/net9.0/Content/Textures/background_solid_sky.png

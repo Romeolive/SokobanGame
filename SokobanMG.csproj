@@ -72,5 +72,49 @@
     <Content Include="Content\Textures\sign_exit.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Remove="Content\Textures\hud_character_0.png" />
+    <Content Include="Content\Textures\hud_character_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_1.png" />
+    <Content Include="Content\Textures\hud_character_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_2.png" />
+    <Content Include="Content\Textures\hud_character_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_3.png" />
+    <Content Include="Content\Textures\hud_character_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_4.png" />
+    <Content Include="Content\Textures\hud_character_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_5.png" />
+    <Content Include="Content\Textures\hud_character_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_6.png" />
+    <Content Include="Content\Textures\hud_character_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_7.png" />
+    <Content Include="Content\Textures\hud_character_7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_8.png" />
+    <Content Include="Content\Textures\hud_character_8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\hud_character_9.png" />
+    <Content Include="Content\Textures\hud_character_9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Content\Textures\background_solid_sky.png" />
+    <Content Include="Content\Textures\background_solid_sky.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

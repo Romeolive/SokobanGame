@@ -2,11 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SokobanMG.Core;
-using SokobanMG.UI;
-using System.Collections.Generic;
-
 using System;
-
+using System.Collections.Generic;
 
 namespace SokobanMG
 {
@@ -14,6 +11,10 @@ namespace SokobanMG
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        // ===== WINDOW =====
+        private const int WindowWidth = 1280;
+        private const int WindowHeight = 800;
 
         private const int TileSize = 64;
 
@@ -26,16 +27,21 @@ namespace SokobanMG
 
         private GameState currentState = GameState.Menu;
 
+        // ===== MENU =====
         private const int ButtonSize = 100;
         private const int ButtonSpacing = 20;
         private const int ButtonsPerRow = 5;
+        private const int TotalLevels = 10;
+
         private List<Rectangle> levelButtons;
-        private int totalLevels = 10;
+        private List<Texture2D> levelButtonTextures;
+        private Texture2D menuBackground;
 
+        // ===== GAME =====
         private Level currentLevel;
-        private int currentLevelIndex = 0;
+        private int currentLevelIndex;
 
-        private List<string> levelFiles = new()
+        private readonly List<string> levelFiles = new()
         {
             "Content/Maps/level1.json",
             "Content/Maps/level2.json",
@@ -49,14 +55,13 @@ namespace SokobanMG
             "Content/Maps/level10.json"
         };
 
-        // ====== INPUT ======
-        private KeyboardState prevKeyboard;
 
-        // ====== TEXTURES ======
+        private KeyboardState prevKeyboard;
+        
         private Dictionary<string, Texture2D> textures;
-        private Texture2D pixel;
         private Texture2D winTexture;
         private Texture2D exitTexture;
+        private Texture2D victoryBackground;
 
         public Game1()
         {
@@ -65,23 +70,33 @@ namespace SokobanMG
             IsMouseVisible = true;
         }
 
+        protected override void Initialize()
+        {
+            _graphics.PreferredBackBufferWidth = WindowWidth;
+            _graphics.PreferredBackBufferHeight = WindowHeight;
+            _graphics.ApplyChanges();
+
+            base.Initialize();
+        }
+
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            pixel = new Texture2D(GraphicsDevice, 1, 1);
-            pixel.SetData(new[] { Color.White });
+
+            menuBackground = LoadTexture("Content/Textures/background_solid_sky.png");
+            victoryBackground = LoadTexture("Content/Textures/background_solid_sky.png");
 
             winTexture = LoadTexture("Content/Textures/torch_on_a.png");
             exitTexture = LoadTexture("Content/Textures/sign_exit.png");
 
-            LoadTextures();
+            LoadGameTextures();
+            LoadMenuButtons();
             CreateLevelButtons();
 
             prevKeyboard = Keyboard.GetState();
         }
 
-        private void LoadTextures()
+        private void LoadGameTextures()
         {
             textures = new Dictionary<string, Texture2D>
             {
@@ -93,27 +108,39 @@ namespace SokobanMG
             };
         }
 
+        private void LoadMenuButtons()
+        {
+            levelButtonTextures = new List<Texture2D>();
+
+            for (int i = 0; i < TotalLevels; i++)
+            {
+                levelButtonTextures.Add(
+                    LoadTexture($"Content/Textures/hud_character_{i}.png")
+                );
+            }
+        }
+
         private Texture2D LoadTexture(string path)
         {
             using var stream = TitleContainer.OpenStream(path);
             return Texture2D.FromStream(GraphicsDevice, stream);
         }
-        
+
         private void CreateLevelButtons()
         {
             levelButtons = new List<Rectangle>();
 
-            int totalRows = (int)Math.Ceiling(totalLevels / (float)ButtonsPerRow);
+            int totalRows = (int)Math.Ceiling(TotalLevels / (float)ButtonsPerRow);
             int totalHeight = totalRows * ButtonSize + (totalRows - 1) * ButtonSpacing;
-            int startY = (GraphicsDevice.Viewport.Height - totalHeight) / 2;
+            int startY = (WindowHeight - totalHeight) / 2;
 
-            for (int i = 0; i < totalLevels; i++)
+            int totalRowWidth = ButtonsPerRow * ButtonSize + (ButtonsPerRow - 1) * ButtonSpacing;
+            int startX = (WindowWidth - totalRowWidth) / 2;
+
+            for (int i = 0; i < TotalLevels; i++)
             {
                 int row = i / ButtonsPerRow;
                 int col = i % ButtonsPerRow;
-
-                int totalRowWidth = ButtonsPerRow * ButtonSize + (ButtonsPerRow - 1) * ButtonSpacing;
-                int startX = (GraphicsDevice.Viewport.Width - totalRowWidth) / 2;
 
                 int x = startX + col * (ButtonSize + ButtonSpacing);
                 int y = startY + row * (ButtonSize + ButtonSpacing);
@@ -124,15 +151,13 @@ namespace SokobanMG
 
         private void LoadLevel(int index)
         {
-            if (index < 0 || index >= levelFiles.Count) return;
+            if (index < 0 || index >= levelFiles.Count)
+                return;
 
-            // Загружаем данные уровня
             LevelData data = LevelLoader.LoadFromContent(levelFiles[index]);
             currentLevel = new Level(data);
-            _graphics.PreferredBackBufferWidth = data.Width * TileSize;
-            _graphics.PreferredBackBufferHeight = data.Height * TileSize;
-            _graphics.ApplyChanges();
         }
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -197,16 +222,15 @@ namespace SokobanMG
         {
             var mouse = Mouse.GetState();
 
-            var viewport = GraphicsDevice.Viewport;
-            var button = new Rectangle(
-                viewport.Width / 2 - 100,
-                viewport.Height / 2 + 20,
-                200,
-                50
+            Rectangle exitRect = new Rectangle(
+                WindowWidth / 2 - 120,
+                WindowHeight / 2 + 20,
+                140,
+                70
             );
 
             if (mouse.LeftButton == ButtonState.Pressed &&
-                button.Contains(mouse.Position))
+                exitRect.Contains(mouse.Position))
             {
                 currentState = GameState.Menu;
             }
@@ -216,18 +240,26 @@ namespace SokobanMG
         {
             return ks.IsKeyDown(key) && !prevKeyboard.IsKeyDown(key);
         }
-        
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
 
-            if (currentState == GameState.Menu)
-                DrawMenu();
-            else if (currentState == GameState.Playing)
-                currentLevel.Draw(_spriteBatch, TileSize, textures);
-            else if (currentState == GameState.Victory)
-                DrawVictory();
+            switch (currentState)
+            {
+                case GameState.Menu:
+                    DrawMenu();
+                    break;
+
+                case GameState.Playing:
+                    DrawGameplay();
+                    break;
+
+                case GameState.Victory:
+                    DrawVictory();
+                    break;
+            }
 
             _spriteBatch.End();
             base.Draw(gameTime);
@@ -235,25 +267,51 @@ namespace SokobanMG
 
         private void DrawMenu()
         {
-            foreach (var rect in levelButtons)
+            _spriteBatch.Draw(
+                menuBackground,
+                new Rectangle(0, 0, WindowWidth, WindowHeight),
+                Color.White
+            );
+
+            var mouse = Mouse.GetState();
+
+            for (int i = 0; i < levelButtons.Count; i++)
             {
-                _spriteBatch.Draw(pixel, rect, Color.Gray);
+                bool hover = levelButtons[i].Contains(mouse.Position);
+
+                _spriteBatch.Draw(
+                    levelButtonTextures[i],
+                    levelButtons[i],
+                    hover ? Color.White : Color.LightGray
+                );
             }
+        }
+
+        private void DrawGameplay()
+        {
+            int offsetX = (WindowWidth - currentLevel.Width * TileSize) / 2;
+            int offsetY = (WindowHeight - currentLevel.Height * TileSize) / 2;
+
+            currentLevel.Draw(
+                _spriteBatch,
+                TileSize,
+                textures,
+                offsetX,
+                offsetY
+            );
         }
 
         private void DrawVictory()
         {
-            var viewport = GraphicsDevice.Viewport;
-            var mouse = Mouse.GetState();
             _spriteBatch.Draw(
-                pixel,
-                new Rectangle(0, 0, viewport.Width, viewport.Height),
-                Color.Black * 0.7f
+                victoryBackground,
+                new Rectangle(0, 0, WindowWidth, WindowHeight),
+                Color.White
             );
 
             Rectangle winRect = new Rectangle(
-                viewport.Width / 2 - 200,
-                viewport.Height / 2 - 220,
+                WindowWidth / 2 - 50,
+                WindowHeight / 2 - 180,
                 100,
                 100
             );
@@ -261,27 +319,20 @@ namespace SokobanMG
             _spriteBatch.Draw(winTexture, winRect, Color.White);
 
             Rectangle exitRect = new Rectangle(
-                viewport.Width / 2 - 120,
-                viewport.Height / 2 + 20,
+                WindowWidth / 2 - 120,
+                WindowHeight / 2 + 20,
                 140,
                 70
             );
-            
-            bool hover = exitRect.Contains(mouse.Position);
-            _spriteBatch.Draw(exitTexture, exitRect, hover ? Color.LightGray : Color.White);
 
-            if (hover && mouse.LeftButton == ButtonState.Pressed)
-            {
-                currentState = GameState.Menu;
-            }
-        }
-        private void DrawBorder(Rectangle rect, int thickness, Color color)
-        {
-            _spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, rect.Width, thickness), color);
-            _spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y + rect.Height - thickness, rect.Width, thickness), color);
-            _spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, thickness, rect.Height), color);
-            _spriteBatch.Draw(pixel, new Rectangle(rect.X + rect.Width - thickness, rect.Y, thickness, rect.Height), color);
+            var mouse = Mouse.GetState();
+            bool hover = exitRect.Contains(mouse.Position);
+
+            _spriteBatch.Draw(
+                exitTexture,
+                exitRect,
+                hover ? Color.LightGray : Color.White
+            );
         }
     }
 }
-
