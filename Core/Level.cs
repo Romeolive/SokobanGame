@@ -12,6 +12,9 @@ namespace SokobanMG.Core
         private int height;
         private Entity[,] map;
         private Point player;
+        
+        public int Width => width;
+        public int Height => height;
 
         public Level(LevelData data)
         {

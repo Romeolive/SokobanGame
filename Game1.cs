@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SokobanMG.Core;
+using SokobanMG.UI;
+using System.Collections.Generic;
 
-
-
+using System;
 
 
 namespace SokobanMG
@@ -27,7 +25,6 @@ namespace SokobanMG
         }
 
         private GameState currentState = GameState.Menu;
-
 
         private const int ButtonSize = 100;
         private const int ButtonSpacing = 20;
@@ -71,11 +68,10 @@ namespace SokobanMG
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // 1x1 pixel
+            
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new[] { Color.White });
-            
+
             winTexture = LoadTexture("Content/Textures/torch_on_a.png");
             exitTexture = LoadTexture("Content/Textures/sign_exit.png");
 
@@ -84,7 +80,7 @@ namespace SokobanMG
 
             prevKeyboard = Keyboard.GetState();
         }
-        
+
         private void LoadTextures()
         {
             textures = new Dictionary<string, Texture2D>
@@ -102,8 +98,7 @@ namespace SokobanMG
             using var stream = TitleContainer.OpenStream(path);
             return Texture2D.FromStream(GraphicsDevice, stream);
         }
-
-        // ====== MENU ======
+        
         private void CreateLevelButtons()
         {
             levelButtons = new List<Rectangle>();
@@ -131,14 +126,14 @@ namespace SokobanMG
         {
             if (index < 0 || index >= levelFiles.Count) return;
 
-            var data = LevelLoader.LoadFromContent(levelFiles[index]);
+            // Загружаем данные уровня
+            LevelData data = LevelLoader.LoadFromContent(levelFiles[index]);
             currentLevel = new Level(data);
-
             _graphics.PreferredBackBufferWidth = data.Width * TileSize;
             _graphics.PreferredBackBufferHeight = data.Height * TileSize;
             _graphics.ApplyChanges();
         }
-        
+
         protected override void Update(GameTime gameTime)
         {
             switch (currentState)
@@ -221,8 +216,7 @@ namespace SokobanMG
         {
             return ks.IsKeyDown(key) && !prevKeyboard.IsKeyDown(key);
         }
-
-        // ====== DRAW ======
+        
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -251,14 +245,12 @@ namespace SokobanMG
         {
             var viewport = GraphicsDevice.Viewport;
             var mouse = Mouse.GetState();
-
-            // затемнение фона
             _spriteBatch.Draw(
                 pixel,
                 new Rectangle(0, 0, viewport.Width, viewport.Height),
                 Color.Black * 0.7f
             );
-            
+
             Rectangle winRect = new Rectangle(
                 viewport.Width / 2 - 200,
                 viewport.Height / 2 - 220,
@@ -267,27 +259,22 @@ namespace SokobanMG
             );
 
             _spriteBatch.Draw(winTexture, winRect, Color.White);
-            
+
             Rectangle exitRect = new Rectangle(
                 viewport.Width / 2 - 120,
                 viewport.Height / 2 + 20,
                 140,
                 70
             );
-
-            bool hover = exitRect.Contains(mouse.Position);
-            _spriteBatch.Draw(
-                exitTexture,
-                exitRect,
-                hover ? Color.LightGray : Color.White
-            );
             
+            bool hover = exitRect.Contains(mouse.Position);
+            _spriteBatch.Draw(exitTexture, exitRect, hover ? Color.LightGray : Color.White);
+
             if (hover && mouse.LeftButton == ButtonState.Pressed)
             {
                 currentState = GameState.Menu;
             }
         }
-
         private void DrawBorder(Rectangle rect, int thickness, Color color)
         {
             _spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, rect.Width, thickness), color);
@@ -295,11 +282,6 @@ namespace SokobanMG
             _spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, thickness, rect.Height), color);
             _spriteBatch.Draw(pixel, new Rectangle(rect.X + rect.Width - thickness, rect.Y, thickness, rect.Height), color);
         }
-
-
     }
 }
-
-
-
 
