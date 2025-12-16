@@ -1,15 +1,16 @@
-
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/$(Platform)
-/intermediateDir:obj/$(Platform)
+/outputDir:bin/DesktopGL
+/intermediateDir:obj/DesktopGL
 /platform:DesktopGL
-/config:
 /profile:Reach
-/compress:False
-
-#-------------------------------- References --------------------------------#
-
+/compress:false
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/arial.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/arial.spritefont

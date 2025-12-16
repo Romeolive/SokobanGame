@@ -28,10 +28,9 @@ namespace SokobanMG.Core
                 DrawNumber(sb, pixel, ch - '0', pos, color);
                 return;
             }
-            // draw simple placeholder glyphs: for letters draw a 3x5 block pattern
+
             int pw = PIXEL * SCALE;
             int ph = PIXEL * SCALE;
-            // simple: draw rectangle representing character
             sb.Draw(pixel, new Rectangle((int)pos.X, (int)pos.Y, pw*3, ph*5), color);
         }
 

@@ -1,9 +1,4 @@
-
-
-
-
 using System.Collections.Generic;
-using SokobanMG.Core;
 
 namespace SokobanMG.Core
 {

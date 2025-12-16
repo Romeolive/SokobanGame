@@ -2,10 +2,17 @@ using System.Text.Json.Serialization;
 
 namespace SokobanMG.Core;
 
+
 public class PlayerData
 {
-    [JsonPropertyName("x")] public int X { get; set; }
-    [JsonPropertyName("y")] public int Y { get; set; }
+    [JsonPropertyName("x")]
+    public int X { get; set; }
+
+    [JsonPropertyName("y")]
+    public int Y { get; set; }
+
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = "Player"; 
 }
 
 public class LevelData
